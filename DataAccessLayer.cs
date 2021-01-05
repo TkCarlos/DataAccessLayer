@@ -19,6 +19,7 @@ namespace EZ_PaintProduction.Modulos
             Encrypt_Aes cryptAes = new Encrypt_Aes();
             try
             {
+                //get values from appconfig
                 string ipServer = cryptAes.DecryptString(Properties.Settings.Default.serverIP);
                 string dataBase = cryptAes.DecryptString(Properties.Settings.Default.serverDB);
                 string idLog = cryptAes.DecryptString(Properties.Settings.Default.serverUser);
@@ -32,6 +33,7 @@ namespace EZ_PaintProduction.Modulos
             }
 
         }
+        //this overload can use for test connection
         public DataAccessLayer(string ipServer, string nameDB, string user, string password)
         {
             _stringConnection = crateConnectionString(ipServer, nameDB, user, password);
@@ -42,6 +44,7 @@ namespace EZ_PaintProduction.Modulos
         {
             get
             {
+                //create a new dbcontext
                 establishConnection();
                 return _connectionModel;
             }
@@ -79,6 +82,7 @@ namespace EZ_PaintProduction.Modulos
         {
             try
             {
+                //this only work with sql
                 EntityConnectionStringBuilder constructorDeConexion = new EntityConnectionStringBuilder();
                 constructorDeConexion.Provider = "System.Data.SqlClient";
                 constructorDeConexion.ProviderConnectionString = "data source=" + ipServer + ";initial catalog=" + dataBase + ";persist security info=True;user id=" + idLog + "; password=" + passwordLog + ";multipleactiveresultsets=True;application name=EntityFramework";
@@ -102,6 +106,7 @@ namespace EZ_PaintProduction.Modulos
                 }
                 else
                 {
+                    //crate a new databasecontext
                     _connectionModel = new Modelos.ezAirdbEntidades(_stringConnection);
                     _statusConnection = true;
                 }
